@@ -11,12 +11,25 @@ def exec_cmd(msg):
     msg = msg.strip()
     if msg == '!tweet':
         response = cmd.tweet()
-    if msg == '!fortune':
+
+    if msg.startswith('!fortune'):
+        if len(msg.split()) > 1:
+            arg = msg.split()[1]
+            print(arg)
+            print(len(arg))
+            response = cmd.fortune(arg)
         response = cmd.fortune()
+
     if msg.startswith('!cowsay ') and len(msg) > len('!cowsay '):
         index = msg.index(' ') + 1
-        cowmsg = msg[index:]
-        response = cmd.cowsay(cowmsg)
+        arg = None
+        if msg[index] == '-':
+            arg = msg[index + 1:].split()[0]
+            cowmsg = msg[index + len(arg) + 1:]
+        else:
+            cowmsg = msg[index:]
+        response = cmd.cowsay(arg, cowmsg)
+
     if msg == ('!cowfortune'):
         response = cmd.cowfortune()
 
@@ -24,7 +37,7 @@ def exec_cmd(msg):
 
 @client.event
 async def on_ready():
-    print('bot alan has entered the discord realm')
+    print(f'{client.user} has connected to Discord!')
 
 @client.event
 async def on_message(message):
@@ -33,7 +46,6 @@ async def on_message(message):
     response = exec_cmd(message.content)
     await message.channel.send(response)
 
-# bot code can run without connecting to Discord for testing
 if TOKEN == None:
     print("Running in test mode")
     while True:

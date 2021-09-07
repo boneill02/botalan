@@ -21,6 +21,10 @@ features may be added later.
 Obtain a bot token, then run `start.sh` and enter the token. To stop,
 run `stop.sh`.
 
+## Bugs
+
+Shell injections are possible currently. This must be addressed.
+
 ## License
 
 Copyright (C) 2021 Ben O'Neill <ben@benoneill.xyz>. License: MIT.
